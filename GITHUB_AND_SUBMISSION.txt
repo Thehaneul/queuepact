@@ -1,0 +1,54 @@
+QUEUEPACT — GITHUB AND SUBMISSION DRAFTS
+
+Repository name: queuepact
+
+Short GitHub description:
+GenLayer-powered community request routing with wallet-bound team acknowledgement and preserved decision records.
+
+Suggested topics:
+genlayer, intelligent-contracts, python, request-routing, workflow
+
+Project title:
+QueuePact
+
+Short project summary:
+QueuePact routes community-hall requests to the venue or programme team using
+GenLayer AI consensus. Mixed or unclear requests stay unassigned for review,
+while excluded work is marked out of scope. Only the assigned team wallet can
+acknowledge a queued ticket, with the original decision and ticket hash preserved.
+
+Why GenLayer:
+Requests arrive in ordinary language. Validators independently evaluate the full
+request against a fixed policy, compare the route and audit its explanation.
+Deterministic contract code then binds acknowledgement permission to the assigned
+team wallet. A shared decision changes who can act on the ticket.
+
+What makes it distinct:
+This project manages routing and acknowledgement of task responsibility. It does
+not manage stock holds, bilingual notices, source origins, experimental holdouts,
+brief-change consent or explanation-gated progress from the earlier projects.
+
+Studio contract address:
+0x143bFB5CBbCd63CFdE513Bdd330C22Ce9587e2F2
+
+Version: queuepact-0.2
+Repository URL: TO BE FILLED AFTER GITHUB PUBLICATION
+
+Demonstration evidence:
+- Mixed request -> REVIEW_REQUIRED, no assigned wallet (ticket 0).
+- Accidental repeated mixed text under transport was retained (ticket 1).
+- Personal transport -> OUT_OF_SCOPE, no assigned wallet (ticket 2, taxi).
+- Programme notice -> QUEUED, then ACKNOWLEDGED by the assigned wallet (ticket 3).
+- Original report and ticket hash preserved after acknowledgement.
+- 73 local authored-fixture tests and SDK lint/validation passed.
+
+Evidence limits:
+Hosted results come from user-provided Accepted-state screenshots. Deployment
+was shown FINALIZED; full finalized method-call receipts were not independently
+audited. Local fixtures do not prove general model accuracy. Version 0.1 had an
+UNDETERMINED attempt, preserved in the package. Acknowledgement is not work completion.
+
+Before submission:
+Replace the repository placeholder with the actual published link. Use the form's
+current field labels if they differ. No contest eligibility, prize or acceptance
+is claimed. No GitHub repository or submission has been created by this package.

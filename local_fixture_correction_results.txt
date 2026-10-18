@@ -1,0 +1,35 @@
+WARNING: File `gltest.config.yaml` not found in the current directory, using default config, create a `gltest.config.yaml` file to manage multiple networks
+INFO: Clearing artifacts directory: artifacts
+INFO: Using the following configuration:
+INFO:   RPC URL: http://127.0.0.1:4000/api
+INFO:   Selected Network: localnet
+INFO:   Available networks: ['localnet', 'studionet', 'testnet_asimov', 'testnet_bradbury']
+INFO:   Selected chain type: localnet
+INFO:   Available chains: localnet, studionet, testnet_asimov, testnet_bradbury
+INFO:   Contracts directory: contracts
+INFO:   Artifacts directory: artifacts
+INFO:   Environment: .env
+INFO:   Default wait interval: 3000 ms
+INFO:   Default wait retries: 50
+INFO:   Leader only mode: False
+...............................F
+=================================== FAILURES ===================================
+________________________ test_invalid_ids_rejected[2.5] ________________________
+
+app = (VMContext(_sender=b'\xec\x07\xfc\n\x7f\xef\xe1\x0b]\x95\xea\x9d\x86\xd2\x18^ \xe6R\xf3', _origin=None, _contract_addr...k=None, _traces=[], _trace_enabled=True), <CalldataProxy for <_contract_queuepact.QueuePact object at 0x7f09d9d80140>>)
+index = 2.5
+
+    @pytest.mark.parametrize("index", [-1, 0, True, "0", 2.5])
+    def test_invalid_ids_rejected(app, index):
+        _, c = app
+>       with pytest.raises(Exception, match="invalid_ticket_id"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'invalid_ticket_id'
+E         Actual message: "not calldata encodable 2.5: float\nkey 'args'"
+
+test_queuepact.py:199: AssertionError
+=========================== short test summary info ============================
+FAILED test_queuepact.py::test_invalid_ids_rejected[2.5] - AssertionError: Re...
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 31 passed in 20.94s

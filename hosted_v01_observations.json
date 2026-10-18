@@ -1,0 +1,63 @@
+{
+  "version": "queuepact-0.1",
+  "observation_date": "2026-10-18",
+  "evidence_type": "User-provided Studio screenshots visually inspected; no independent RPC receipt retrieved.",
+  "original_source_sha256": "0fbb1b71ce4ea94337dcf58f9ee674c4092c0d48ed32f9240994167816d07018",
+  "contract_address": null,
+  "deployment": {
+    "status_shown": "FINALIZED",
+    "transaction_prefix": "0x70a8",
+    "full_hash": null
+  },
+  "initial_board": {
+    "version": "queuepact-0.1",
+    "ticket_count": 0,
+    "acknowledged_count": 0,
+    "venue_team": "0x507de2c3391f085e99208c28ad4eeaf567995b43",
+    "programme_team": "0xb32569c8822e66fae73b8eb3a11e0e6034bb4638",
+    "policy_hash": "9788bdd84ca21d89b00cc8defd229903696b53a705e9358f39f718a1995b308f"
+  },
+  "first_ticket": {
+    "request_key": "mixed",
+    "request_text": "Please arrange the hall chairs in rows and update the workshop time on the programme notice.",
+    "status_shown": "UNDETERMINED",
+    "execution_result_shown": "SUCCESS",
+    "proposed_output": 0,
+    "saved_ticket_id": null,
+    "transaction_hash_transcribed_from_image": "0xe915922a1e5f1aa9936cb0a904cf55d8e659067c6dba1019eccec3d878f6d3ad",
+    "hash_independently_verified": false,
+    "leader_rotations_observed": true,
+    "validator_disagreement_observed": true
+  },
+  "additional_error_screenshot": {
+    "filename": "Screenshot_2026-10-18-21-25-27-955_com.android.chrome.jpg",
+    "provider_label": "policy:prd-sonnet",
+    "traceback_locations": [
+      "/contract.py line 169 leader_fn",
+      "/contract.py line 141 _ask"
+    ],
+    "final_error": "ValueError: EVALUATION_OUTPUT_INVALID: two invalid responses; no ticket saved",
+    "other_messages": [
+      "Validator execution cancelled after quorum",
+      "[contract_error] exit_code 1"
+    ]
+  },
+  "diagnosis_limits": [
+    "One leader exhausted the two response-format attempts.",
+    "The v0.1 code does not log which response field failed.",
+    "Raw rejected responses and earlier independent decisions/audits are unavailable.",
+    "This error does not establish the cause of every earlier Disagree vote.",
+    "The user-pasted malformed JSON is not evidence of the execution failure: the contract was reached.",
+    "The attempted read-only Studio RPC lookup returned HTTP 403."
+  ],
+  "screenshots_included_in_package": false,
+  "post_failure_board": {
+    "screenshot": "Screenshot_2026-10-18-21-33-33-210_com.android.chrome.jpg",
+    "state_shown": "Accepted",
+    "version": "queuepact-0.1",
+    "ticket_count": 0,
+    "acknowledged_count": 0,
+    "contract_address_displayed": "0xd6...c8DF",
+    "full_contract_address": null
+  }
+}

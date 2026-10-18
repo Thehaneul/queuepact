@@ -1,0 +1,53 @@
+{
+  "project": "QueuePact",
+  "version": "queuepact-0.1",
+  "prepared_date": "2026-10-18",
+  "source_sha256": "0fbb1b71ce4ea94337dcf58f9ee674c4092c0d48ed32f9240994167816d07018",
+  "local": {
+    "fixture_tests_passed": 65,
+    "sdk_lint_checks_passed": 3,
+    "sdk_validation": "PASSED",
+    "public_read_methods": 3,
+    "public_write_methods": 2,
+    "constructor_parameters": 1,
+    "live_model_calls": 0,
+    "network_transactions": 0,
+    "consensus_evidence": "Independent callback tests and a labelled local gate harness; not a live validator network.",
+    "initial_runs": [
+      "Interrupted SDK setup run, partial output retained.",
+      "31 passed and 1 fixture failure: float rejected by calldata before contract check; expectation corrected."
+    ],
+    "final_test_log": "local_test_results.txt",
+    "final_sdk_log": "sdk_check_results.txt"
+  },
+  "hosted": {
+    "status": "NOT_RUN",
+    "contract_address": null,
+    "transactions": [],
+    "observations": []
+  },
+  "publication": {
+    "github_url": null,
+    "submission_status": "NOT_SUBMITTED"
+  },
+  "planned_walkthrough": {
+    "deployments": 1,
+    "writes": 4,
+    "essential_reads": 5,
+    "wallets": 2,
+    "wallet_switches": 1,
+    "sequence": [
+      "get_board",
+      "mixed ticket -> REVIEW_REQUIRED",
+      "transport ticket -> OUT_OF_SCOPE",
+      "programme notice ticket -> QUEUED",
+      "assigned wallet acknowledgement -> ACKNOWLEDGED"
+    ],
+    "optional_live_tests_planned": false
+  },
+  "previous_projects": {
+    "changed_or_retested": false,
+    "ExplainGate": "User-confirmed submitted; walkthrough finished.",
+    "SurplusHold": "Walkthrough complete and GitHub upload verified on 2026-10-14; final submission not explicitly confirmed."
+  }
+}

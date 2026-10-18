@@ -1,0 +1,77 @@
+QUEUEPACT — SMALL PHONE WALKTHROUGH
+
+PLANNED ONLY. No deployment or hosted results are recorded yet.
+Budget: 1 deployment + 4 writes + 5 essential reads.
+Two wallets you control, with one switch near the end.
+
+Use Normal / Full Consensus and keep Simulation Mode unchecked when present.
+Read Accepted state consistently. If controls differ, send a screenshot.
+
+1. DEPLOY AND READ THE BOARD — VENUE WALLET
+
+Open queuepact.py in Studio using Add From File.
+The selected deploying wallet becomes the VENUE team.
+programme_wallet: paste the full public 0x address of your OTHER Studio wallet.
+Do not leave the default empty value. It must differ from the selected wallet.
+
+Deploy once. Keep the new contract address. Call get_board().
+Expected: queuepact-0.1, correct two wallet addresses, ticket_count 0,
+acknowledged_count 0. Check addresses before submitting tickets.
+
+2. MIXED REQUEST — STAY ON VENUE WALLET
+
+submit_ticket
+request_key: mixed
+request_text:
+Please arrange the hall chairs in rows and update the workshop time on the programme notice.
+
+After success, call get_ticket with the returned ticket_id (expected 0).
+Expected: REVIEW_REQUIRED; no assigned wallet; reason mentions both teams.
+
+3. OUTSIDE SCOPE — SAME WALLET
+
+submit_ticket
+request_key: transport
+request_text:
+Please book a taxi to take me home after the workshop.
+
+Read this returned ID using get_ticket (expected 1).
+Expected: OUT_OF_SCOPE; no assigned wallet; personal transport is excluded.
+
+4. CLEAR PROGRAMME REQUEST — SAME WALLET
+
+submit_ticket
+request_key: notice
+request_text:
+Please update the community hall programme notice so the craft workshop is listed at 3 pm.
+
+Read this returned ID using get_ticket (expected 2).
+Expected: QUEUED, assigned_team PROGRAMME, assigned_wallet equals the programme
+wallet from get_board, acknowledged false. Keep the ticket_hash.
+
+5. ACKNOWLEDGE — SWITCH ONCE TO THE PROGRAMME WALLET
+
+acknowledge_ticket
+ticket_id: the actual programme-ticket ID from step 4 (expected 2).
+
+Submit once, then call get_ticket with that same ID.
+Expected: ACKNOWLEDGED; acknowledged true; acknowledged_by is the programme
+wallet; original report, ticket_hash and initial_status QUEUED unchanged.
+
+STOP: the essential walkthrough is complete. No extra live wallet-failure,
+venue-routing, replay or capacity demonstrations are planned. These have local
+fixture coverage only. Acknowledgement does not mean the notice was changed.
+
+IF SOMETHING FAILS
+
+Share the exact traceback, execution result and transaction status before retrying.
+FINALIZED / ERROR is failure. Execution SUCCESS alone is not consensus acceptance.
+An Accepted-state read is not the same as a finalized transaction receipt.
+
+Use get_ticket to read by numeric ID. get_ticket_id is only a recovery lookup:
+requester = the wallet that submitted the ticket; request_key = its original key.
+Returned IDs follow successful saves, including REVIEW_REQUIRED and OUT_OF_SCOPE;
+do not assume expected IDs if the actual sequence changes.
+
+If Studio loses the editor association, import the existing contract address.
+Do not redeploy merely to restore the UI. Preserve already saved results.

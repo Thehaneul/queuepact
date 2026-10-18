@@ -1,0 +1,186 @@
+{
+  "project": "QueuePact",
+  "version": "queuepact-0.2",
+  "date": "2026-10-18",
+  "timezone": "Africa/Lagos",
+  "contract_address": "0x143bFB5CBbCd63CFdE513Bdd330C22Ce9587e2F2",
+  "evidence_type": "Normalized transcription of user-provided screenshots; not a raw RPC export.",
+  "initial_board": {
+    "screenshot": "Screenshot_2026-10-18-21-36-07-473_com.android.chrome.jpg",
+    "state_shown": "Accepted",
+    "ticket_count": 0,
+    "acknowledged_count": 0,
+    "version": "queuepact-0.2",
+    "policy_hash": "d27d4a6a148537f4cde7379a62fe5be14195d91b8eb05c4d0323600d54895604",
+    "venue_team": "0x507de2c3391f085e99208c28ad4eeaf567995b43",
+    "programme_team": "0xb32569c8822e66fae73b8eb3a11e0e6034bb4638",
+    "deployment_status_shown": "FINALIZED",
+    "deployment_tx_prefix": "0x8ab7",
+    "deployment_tx_full_hash": null
+  },
+  "reads": [
+    {
+      "screenshot": "Screenshot_2026-10-18-21-38-26-356_com.android.chrome.jpg",
+      "method": "get_ticket",
+      "ticket_id": 0,
+      "state_shown": "Accepted",
+      "response": {
+        "version": "queuepact-0.2",
+        "ticket_id": 0,
+        "request_key": "mixed",
+        "requester": "0x507de2c3391f085e99208c28ad4eeaf567995b43",
+        "request_text": "Please arrange the hall chairs in rows and update the workshop time on the programme notice.",
+        "policy_hash": "d27d4a6a148537f4cde7379a62fe5be14195d91b8eb05c4d0323600d54895604",
+        "report": {
+          "route": "REVIEW",
+          "reason": "The request asks for two distinct actions: arranging hall chairs in rows (a VENUE task) and updating the workshop time on the programme notice (a PROGRAMME task). Both teams are needed to fulfil the complete request, triggering the 'needs both teams' rule.",
+          "request_quote": "Please arrange the hall chairs in rows and update the workshop time on the programme notice.",
+          "policy_quote": "VENUE handles physical setup of tables, chairs and room layout inside the community hall. VENUE does not handle programme notices, event listings, invitations, ticket sales, repairs or personal transport.\nPROGRAMME handles event timetable notices, programme listings and invitation wording for activities at the community hall. PROGRAMME does not handle furniture, room layout, ticket sales, repairs or personal transport.",
+          "basis": "FIXED_POLICY_AND_REQUEST"
+        },
+        "assigned_team": "",
+        "assigned_wallet": "",
+        "initial_status": "REVIEW_REQUIRED",
+        "ticket_hash": "63b518da78767347bf1e7e845e9f680ae1027f97b5314ef1233b1b2bb070aa84",
+        "acknowledged": false,
+        "acknowledged_by": "",
+        "current_status": "REVIEW_REQUIRED"
+      }
+    },
+    {
+      "screenshot": "Screenshot_2026-10-18-21-43-19-296_com.android.chrome.jpg",
+      "method": "get_ticket",
+      "ticket_id": 1,
+      "state_shown": "Accepted",
+      "response": {
+        "version": "queuepact-0.2",
+        "ticket_id": 1,
+        "request_key": "transport",
+        "requester": "0x507de2c3391f085e99208c28ad4eeaf567995b43",
+        "request_text": "Please arrange the hall chairs in rows and update the workshop time on the programme notice.",
+        "policy_hash": "d27d4a6a148537f4cde7379a62fe5be14195d91b8eb05c4d0323600d54895604",
+        "report": {
+          "route": "REVIEW",
+          "reason": "The request needs both teams: arranging the hall chairs in rows is VENUE's physical furniture/layout duty, while updating the workshop time on the programme notice is PROGRAMME's timetable-notice duty. Since no single team covers both actions, the request must be routed for review and splitting.",
+          "request_quote": "Please arrange the hall chairs in rows and update the workshop time on the programme notice.",
+          "policy_quote": "VENUE handles physical setup of tables, chairs and room layout inside the community hall. VENUE does not handle programme notices, event listings, invitations, ticket sales, repairs or personal transport.\nPROGRAMME handles event timetable notices, programme listings and invitation wording for activities at the community hall. PROGRAMME does not handle furniture, room layout, ticket sales, repairs or personal transport.",
+          "basis": "FIXED_POLICY_AND_REQUEST"
+        },
+        "assigned_team": "",
+        "assigned_wallet": "",
+        "initial_status": "REVIEW_REQUIRED",
+        "ticket_hash": "c2987ac713e677d29c742f63b47ed7e529f765ca1635e492d2df927cf5889ba9",
+        "acknowledged": false,
+        "acknowledged_by": "",
+        "current_status": "REVIEW_REQUIRED"
+      }
+    },
+    {
+      "screenshot": "Screenshot_2026-10-18-21-45-28-421_com.android.chrome.jpg",
+      "method": "get_ticket",
+      "ticket_id": 2,
+      "state_shown": "Accepted",
+      "response": {
+        "version": "queuepact-0.2",
+        "ticket_id": 2,
+        "request_key": "taxi",
+        "requester": "0x507de2c3391f085e99208c28ad4eeaf567995b43",
+        "request_text": "Please book a taxi to take me home after the workshop.",
+        "policy_hash": "d27d4a6a148537f4cde7379a62fe5be14195d91b8eb05c4d0323600d54895604",
+        "report": {
+          "route": "OUTSIDE",
+          "reason": "The request is to book personal transport home after the workshop. Personal transport is explicitly excluded from both VENUE and PROGRAMME duties, so it is outside both teams' scope.",
+          "request_quote": "Please book a taxi to take me home after the workshop.",
+          "policy_quote": "VENUE handles physical setup of tables, chairs and room layout inside the community hall. VENUE does not handle programme notices, event listings, invitations, ticket sales, repairs or personal transport.\nPROGRAMME handles event timetable notices, programme listings and invitation wording for activities at the community hall. PROGRAMME does not handle furniture, room layout, ticket sales, repairs or personal transport.",
+          "basis": "FIXED_POLICY_AND_REQUEST"
+        },
+        "assigned_team": "",
+        "assigned_wallet": "",
+        "initial_status": "OUT_OF_SCOPE",
+        "ticket_hash": "12cd9076b180741801ecc0247364b74ef3d25255334f8fe3a2a462fde484b95b",
+        "acknowledged": false,
+        "acknowledged_by": "",
+        "current_status": "OUT_OF_SCOPE"
+      }
+    },
+    {
+      "screenshot": "Screenshot_2026-10-18-21-47-09-108_com.android.chrome.jpg",
+      "method": "get_ticket",
+      "ticket_id": 3,
+      "state_shown": "Accepted",
+      "response": {
+        "version": "queuepact-0.2",
+        "ticket_id": 3,
+        "request_key": "notice",
+        "requester": "0x507de2c3391f085e99208c28ad4eeaf567995b43",
+        "request_text": "Please update the community hall programme notice so the craft workshop is listed at 3 pm.",
+        "policy_hash": "d27d4a6a148537f4cde7379a62fe5be14195d91b8eb05c4d0323600d54895604",
+        "report": {
+          "route": "PROGRAMME",
+          "reason": "Request asks to update community hall programme notice listing craft workshop at 3 pm, which matches PROGRAMME duty for event timetable notices and programme listings.",
+          "request_quote": "Please update the community hall programme notice so the craft workshop is listed at 3 pm.",
+          "policy_quote": "PROGRAMME handles event timetable notices, programme listings and invitation wording for activities at the community hall. PROGRAMME does not handle furniture, room layout, ticket sales, repairs or personal transport.",
+          "basis": "FIXED_POLICY_AND_REQUEST"
+        },
+        "assigned_team": "PROGRAMME",
+        "assigned_wallet": "0xb32569c8822e66fae73b8eb3a11e0e6034bb4638",
+        "initial_status": "QUEUED",
+        "ticket_hash": "60298ec275ca41316d426da0e65c98b0aa2060c5dc97fd25153775714e63fb43",
+        "acknowledged": false,
+        "acknowledged_by": "",
+        "current_status": "QUEUED"
+      }
+    },
+    {
+      "screenshot": "Screenshot_2026-10-18-21-49-13-582_com.android.chrome.jpg",
+      "method": "get_ticket",
+      "ticket_id": 3,
+      "state_shown": "Accepted",
+      "response": {
+        "version": "queuepact-0.2",
+        "ticket_id": 3,
+        "request_key": "notice",
+        "requester": "0x507de2c3391f085e99208c28ad4eeaf567995b43",
+        "request_text": "Please update the community hall programme notice so the craft workshop is listed at 3 pm.",
+        "policy_hash": "d27d4a6a148537f4cde7379a62fe5be14195d91b8eb05c4d0323600d54895604",
+        "report": {
+          "route": "PROGRAMME",
+          "reason": "Request asks to update community hall programme notice listing craft workshop at 3 pm, which matches PROGRAMME duty for event timetable notices and programme listings.",
+          "request_quote": "Please update the community hall programme notice so the craft workshop is listed at 3 pm.",
+          "policy_quote": "PROGRAMME handles event timetable notices, programme listings and invitation wording for activities at the community hall. PROGRAMME does not handle furniture, room layout, ticket sales, repairs or personal transport.",
+          "basis": "FIXED_POLICY_AND_REQUEST"
+        },
+        "assigned_team": "PROGRAMME",
+        "assigned_wallet": "0xb32569c8822e66fae73b8eb3a11e0e6034bb4638",
+        "initial_status": "QUEUED",
+        "ticket_hash": "60298ec275ca41316d426da0e65c98b0aa2060c5dc97fd25153775714e63fb43",
+        "acknowledged": true,
+        "acknowledged_by": "0xb32569c8822e66fae73b8eb3a11e0e6034bb4638",
+        "current_status": "ACKNOWLEDGED"
+      }
+    }
+  ],
+  "operator_mistake": {
+    "ticket_id": 1,
+    "request_key": "transport",
+    "explanation": "User changed the key but submitted the old mixed text. Record retained. Correct taxi text was submitted as key taxi, ticket 2."
+  },
+  "evidence_checks": {
+    "all_four_ticket_hashes_reproduced_from_transcription_and_match_displayed_hashes": true,
+    "policy_hash_reproduced_and_matches_display": true,
+    "ticket_3_original_report_unchanged_after_acknowledgement": true,
+    "ticket_3_original_hash_unchanged_after_acknowledgement": true,
+    "only_changed_read_fields": [
+      "acknowledged",
+      "acknowledged_by",
+      "current_status"
+    ]
+  },
+  "limits": [
+    "Only screenshot evidence was inspected; no independently fetched RPC state or full finalized receipts.",
+    "Deployment FINALIZED is shown; the later method-call results are Accepted-state reads, not full receipt audits.",
+    "Successful v0.2 examples do not prove general model reliability or explain every v0.1 disagreement.",
+    "Acknowledgement records receipt/responsibility, not completed physical work.",
+    "No extra live tests are required by this walkthrough."
+  ]
+}
