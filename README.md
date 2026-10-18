@@ -3,8 +3,28 @@
 A GenLayer Intelligent Contract for assigning community-hall requests to one of
 two teams and recording that team's acknowledgement.
 
-**Status: local prototype. Not deployed, published to GitHub or submitted.**
-The phone steps in this package are planned, not hosted evidence.
+**Status: v0.2 passed 73 local fixture checks and completed the bounded Studio
+walkthrough on 18 October 2026, evidenced by user-provided Accepted-state reads.**
+Contract: `0x143bFB5CBbCd63CFdE513Bdd330C22Ce9587e2F2`.
+
+| Ticket | Key | Observed result |
+| --- | --- | --- |
+| 0 | mixed | REVIEW_REQUIRED; both teams needed |
+| 1 | transport | REVIEW_REQUIRED; old mixed text was submitted accidentally |
+| 2 | taxi | OUT_OF_SCOPE; personal transport excluded |
+| 3 | notice | QUEUED for PROGRAMME, then ACKNOWLEDGED by its assigned wallet |
+
+Ticket 3's original report and hash remained unchanged. The deployment row showed
+FINALIZED; complete finalized method-call receipts were not independently audited.
+The walkthrough is complete; no extra live tests are planned. See HOSTED_RESULTS.json.
+
+Version 0.1 deployed successfully, but its first mixed ticket ended UNDETERMINED.
+One rotated leader rejected two model responses. The exact rejected fields were
+not logged; this is not a confirmed diagnosis of every validator disagreement.
+The subsequent v0.1 board read showed zero saved tickets. The current v0.2 contract
+is a fresh instance. Repository: https://github.com/Thehaneul/queuepact. No submission has been reported.
+See RECOVERY_NOTES.md. Original source and failure evidence are preserved inside
+ARCHIVED_V01.zip, with their history/ paths retained within that archive.
 
 ## In plain English
 
@@ -55,13 +75,19 @@ nor an ID. Any wallet may submit, including a team wallet.
 
 The leader evaluates the request. Each validator independently evaluates the same
 policy and full request and compares the exact route, then audits the proposed
-quotations and reason. The model cannot select a wallet, change a permission,
+route and reason against the full inputs. The model cannot select a wallet, change a permission,
 set acknowledgement flags, edit the policy or claim a completed task.
 
-Deterministic checks require the exact five-key schema, an allowed route,
-nonempty bounded explanation and verbatim quotations. A routed result must quote
-the selected team's scope. Semantic relevance is independently audited; a quote
-occurring in the input alone is not proof the decision is correct.
+The model returns only route and reason. Code attaches the full original request,
+the complete selected team's scope (both scopes for REVIEW/OUTSIDE), and the fixed
+basis label. The stored report still has five fields. Deterministic checks require
+an allowed route, a nonempty explanation of at most 500 characters, and exact
+equality of these attached sources. The sources are context, not a model-selected
+supporting excerpt. Independent route agreement and semantic auditing remain
+mandatory. Invalid model output never becomes an automatic REVIEW result.
+
+The assessment and audit now have separate output instructions. Assessment format
+errors name a bounded failure category, without echoing raw model content.
 
 Each assessment allows at most one fresh format retry (two calls total). Each
 validator audit allows at most one format retry. A valid negative audit is never

@@ -32,7 +32,7 @@ Studio contract address:
 0x143bFB5CBbCd63CFdE513Bdd330C22Ce9587e2F2
 
 Version: queuepact-0.2
-Repository URL: TO BE FILLED AFTER GITHUB PUBLICATION
+Repository URL: https://github.com/Thehaneul/queuepact
 
 Demonstration evidence:
 - Mixed request -> REVIEW_REQUIRED, no assigned wallet (ticket 0).
@@ -49,6 +49,6 @@ audited. Local fixtures do not prove general model accuracy. Version 0.1 had an
 UNDETERMINED attempt, preserved in the package. Acknowledgement is not work completion.
 
 Before submission:
-Replace the repository placeholder with the actual published link. Use the form's
+First complete and verify the corrected v0.2 repository upload. Use the form's
 current field labels if they differ. No contest eligibility, prize or acceptance
-is claimed. No GitHub repository or submission has been created by this package.
+is claimed. The repository exists; no submission has been reported.

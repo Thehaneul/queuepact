@@ -57,7 +57,10 @@ The before/after report and hash match. The final result screenshot is at 21:49.
 The initial v0.1 attempt remains failed-attempt evidence. No in-place migration was
 performed. The v0.2 walkthrough is complete; no extra live tests are planned.
 These are screenshot observations, not independently retrieved finalized receipts.
-No GitHub publication or submission has yet been recorded.
+The GitHub repository exists at https://github.com/Thehaneul/queuepact.
+Its first upload mixed archived v0.1 files into the root. This corrected flat
+bundle keeps the archive in ARCHIVED_V01.zip to prevent duplicate-name collisions.
+No submission has been reported.
 
 ## Technical reference
 

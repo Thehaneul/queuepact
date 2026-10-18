@@ -1,77 +1,60 @@
-QUEUEPACT — SMALL PHONE WALKTHROUGH
+QUEUEPACT — COMPLETED PHONE WALKTHROUGH
+18 October 2026, Africa/Lagos time
 
-PLANNED ONLY. No deployment or hosted results are recorded yet.
-Budget: 1 deployment + 4 writes + 5 essential reads.
-Two wallets you control, with one switch near the end.
+Contract: 0x143bFB5CBbCd63CFdE513Bdd330C22Ce9587e2F2
+Version: queuepact-0.2
+Studio: Normal (Full Consensus); Simulation Mode unchecked in the screenshots.
+VENUE: 0x507de2c3391f085e99208c28ad4eeaf567995b43
+PROGRAMME: 0xb32569c8822e66fae73b8eb3a11e0e6034bb4638
 
-Use Normal / Full Consensus and keep Simulation Mode unchecked when present.
-Read Accepted state consistently. If controls differ, send a screenshot.
+RESULT: the bounded walkthrough is complete. Do not restart it or add optional
+live tests. The steps below document what happened, rather than request new calls.
 
-1. DEPLOY AND READ THE BOARD — VENUE WALLET
+1. OLD VERSION CHECK — 21:33
+Version 0.1 had an UNDETERMINED first mixed ticket. Its post-failure board showed
+0 tickets and 0 acknowledgements. Its displayed address was 0xd6...c8DF; the full
+old address was not supplied. A fresh v0.2 instance was used for recovery.
 
-Open queuepact.py in Studio using Add From File.
-The selected deploying wallet becomes the VENUE team.
-programme_wallet: paste the full public 0x address of your OTHER Studio wallet.
-Do not leave the default empty value. It must differ from the selected wallet.
+2. VERSION 0.2 INITIAL BOARD — 21:36
+Deployment row showed FINALIZED. get_board in Accepted state showed version 0.2,
+the intended two wallets, 0 tickets and 0 acknowledgements.
 
-Deploy once. Keep the new contract address. Call get_board().
-Expected: queuepact-0.1, correct two wallet addresses, ticket_count 0,
-acknowledged_count 0. Check addresses before submitting tickets.
+3. MIXED REQUEST — TICKET 0 — 21:38
+key: mixed
+text: Please arrange the hall chairs in rows and update the workshop time on the programme notice.
+Observed: REVIEW_REQUIRED, no assigned wallet. Both teams are needed.
 
-2. MIXED REQUEST — STAY ON VENUE WALLET
+4. ACCIDENTAL EXTRA REQUEST — TICKET 1 — 21:43
+key: transport
+text: same mixed request as ticket 0.
+The user changed the key but submitted before replacing the old text.
+Observed: REVIEW_REQUIRED, no assigned wallet. This record was retained.
 
-submit_ticket
-request_key: mixed
-request_text:
-Please arrange the hall chairs in rows and update the workshop time on the programme notice.
+5. CORRECT TRANSPORT REQUEST — TICKET 2 — 21:45
+key: taxi
+text: Please book a taxi to take me home after the workshop.
+Observed: OUT_OF_SCOPE, no assigned wallet. Both teams exclude personal transport.
 
-After success, call get_ticket with the returned ticket_id (expected 0).
-Expected: REVIEW_REQUIRED; no assigned wallet; reason mentions both teams.
+6. PROGRAMME REQUEST — TICKET 3 — 21:47
+key: notice
+text: Please update the community hall programme notice so the craft workshop is listed at 3 pm.
+Observed: QUEUED, assigned_team PROGRAMME, assigned wallet ending 4638,
+acknowledged false. All ticket submissions were from the venue wallet ending 5B43.
 
-3. OUTSIDE SCOPE — SAME WALLET
+7. ACKNOWLEDGEMENT — TICKET 3 — 21:49
+The user was guided to switch once to the programme wallet and call
+acknowledge_ticket(3). The subsequent Accepted-state get_ticket(3) response shows
+ACKNOWLEDGED, acknowledged true, acknowledged_by the programme wallet ending 4638.
+The original report, ticket hash, assigned wallet and initial_status QUEUED match.
+Acknowledgement records responsibility; it does not prove that a notice was edited.
 
-submit_ticket
-request_key: transport
-request_text:
-Please book a taxi to take me home after the workshop.
+STOP: no more live checks are planned. Next work is verifying the corrected GitHub upload and submission.
+The original prospective walkthrough is preserved inside ARCHIVED_V01.zip at
+history/PHONE_WALKTHROUGH_v02_PLANNED.txt.
+Those historical instructions do not describe the final ticket IDs.
 
-Read this returned ID using get_ticket (expected 1).
-Expected: OUT_OF_SCOPE; no assigned wallet; personal transport is excluded.
-
-4. CLEAR PROGRAMME REQUEST — SAME WALLET
-
-submit_ticket
-request_key: notice
-request_text:
-Please update the community hall programme notice so the craft workshop is listed at 3 pm.
-
-Read this returned ID using get_ticket (expected 2).
-Expected: QUEUED, assigned_team PROGRAMME, assigned_wallet equals the programme
-wallet from get_board, acknowledged false. Keep the ticket_hash.
-
-5. ACKNOWLEDGE — SWITCH ONCE TO THE PROGRAMME WALLET
-
-acknowledge_ticket
-ticket_id: the actual programme-ticket ID from step 4 (expected 2).
-
-Submit once, then call get_ticket with that same ID.
-Expected: ACKNOWLEDGED; acknowledged true; acknowledged_by is the programme
-wallet; original report, ticket_hash and initial_status QUEUED unchanged.
-
-STOP: the essential walkthrough is complete. No extra live wallet-failure,
-venue-routing, replay or capacity demonstrations are planned. These have local
-fixture coverage only. Acknowledgement does not mean the notice was changed.
-
-IF SOMETHING FAILS
-
-Share the exact traceback, execution result and transaction status before retrying.
-FINALIZED / ERROR is failure. Execution SUCCESS alone is not consensus acceptance.
-An Accepted-state read is not the same as a finalized transaction receipt.
-
-Use get_ticket to read by numeric ID. get_ticket_id is only a recovery lookup:
-requester = the wallet that submitted the ticket; request_key = its original key.
-Returned IDs follow successful saves, including REVIEW_REQUIRED and OUT_OF_SCOPE;
-do not assume expected IDs if the actual sequence changes.
-
-If Studio loses the editor association, import the existing contract address.
-Do not redeploy merely to restore the UI. Preserve already saved results.
+EVIDENCE LIMIT
+The saved results are normalized transcriptions of user screenshots in Accepted
+state. The deployment row showed FINALIZED, but full finalized method-call receipts
+were not independently retrieved or audited. No fresh final board-totals read was
+requested. See HOSTED_RESULTS.json and VERIFICATION.md for the precise scope.

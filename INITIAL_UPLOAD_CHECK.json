@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/Thehaneul/queuepact",
+  "date": "2026-10-18",
+  "commit_checked": "a64f72be8052b818e18a973dc63dc1a7981db8ce",
+  "deployed_version": "queuepact-0.2",
+  "uploaded_source_version_observed": "queuepact-0.1",
+  "uploaded_source_git_blob": "9b944559b923a39c8a3192dca5d3232b6609325c",
+  "corrected_source_git_blob": "f41be8af16a4f6d5111de3c0501d8f8cf1b03b69",
+  "corrected_source_sha256": "a0ab0c163d2378d64e427b0ef23e4dacb8d1125fe7c91e86cf32894a71b8298f",
+  "correction": "Replace root files using this flat bundle. Historical folder files are contained in one ZIP. No contract code changes or additional tests/deployments were performed."
+}

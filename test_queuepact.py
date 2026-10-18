@@ -31,12 +31,18 @@ def addr(value):
 
 def report(route="PROGRAMME", text=None):
     return {"route": route, "request_quote": text or REQUESTS[route],
-            "policy_quote": VENUE_SCOPE if route == "VENUE" else PROGRAMME_SCOPE,
+            "policy_quote": {"VENUE": VENUE_SCOPE, "PROGRAMME": PROGRAMME_SCOPE}.get(
+                route, VENUE_SCOPE + "\n" + PROGRAMME_SCOPE),
             "reason": {"VENUE": "The request concerns physical seating setup inside the hall.",
                        "PROGRAMME": "Updating the workshop time on a programme notice is a PROGRAMME duty.",
                        "REVIEW": "The request combines furniture setup and programme notices, requiring both teams.",
                        "OUTSIDE": "Personal transport is excluded from both teams' duties."}[route],
             "basis": "FIXED_POLICY_AND_REQUEST"}
+
+
+def decision(route="PROGRAMME", text=None):
+    value = report(route, text)
+    return {"route": value["route"], "reason": value["reason"]}
 
 
 @pytest.fixture
@@ -51,7 +57,7 @@ def app():
 
 def install(vm, data=None, audit=None):
     vm.clear_mocks()
-    vm.mock_llm(r"(?s)^Assess QueuePact.*", json.dumps(report() if data is None else data))
+    vm.mock_llm(r"(?s)^Assess QueuePact.*", json.dumps(decision() if data is None else data))
     vm.mock_llm(r"(?s)^Audit QueuePact.*", json.dumps({"accept": True} if audit is None else audit))
 
 
@@ -74,7 +80,7 @@ def digest(value):
 ])
 def test_four_routes_and_independent_validator(app, route, status, assigned):
     vm, c = app
-    install(vm, report(route))
+    install(vm, decision(route))
     assert c.submit_ticket("example", REQUESTS[route]) == 0
     assert vm.run_validator() is True
     r = ticket(c)
@@ -82,6 +88,7 @@ def test_four_routes_and_independent_validator(app, route, status, assigned):
     assert r["assigned_wallet"] == (addr(assigned) if assigned else "")
     assert r["assigned_team"] == (route if assigned else "")
     assert r["acknowledged"] is False and r["acknowledged_by"] == ""
+    assert r["report"] == report(route)
     assert board(c)["ticket_count"] == 1 and board(c)["acknowledged_count"] == 0
 
 
@@ -89,7 +96,7 @@ def test_complete_phone_sequence_and_preserved_record(app):
     vm, c = app
     vm.sender = VENUE
     for key, route in (("mixed", "REVIEW"), ("transport", "OUTSIDE"), ("notice", "PROGRAMME")):
-        install(vm, report(route))
+        install(vm, decision(route))
         c.submit_ticket(key, REQUESTS[route])
         assert vm.run_validator() is True
     before = ticket(c, 2)
@@ -108,7 +115,7 @@ def test_complete_phone_sequence_and_preserved_record(app):
 @pytest.mark.parametrize("route,team", [("VENUE", VENUE), ("PROGRAMME", PROGRAMME)])
 def test_only_assigned_wallet_can_acknowledge_once(app, route, team):
     vm, c = app
-    install(vm, report(route))
+    install(vm, decision(route))
     c.submit_ticket("work", REQUESTS[route])
     original = c.get_ticket(0)
     for sender in (REPORTER, OUTSIDER, PROGRAMME if team == VENUE else VENUE):
@@ -127,7 +134,7 @@ def test_only_assigned_wallet_can_acknowledge_once(app, route, team):
 @pytest.mark.parametrize("route", ["REVIEW", "OUTSIDE"])
 def test_no_wallet_can_acknowledge_unassigned_ticket(app, route):
     vm, c = app
-    install(vm, report(route))
+    install(vm, decision(route))
     c.submit_ticket("no-team", REQUESTS[route])
     before = c.get_ticket(0)
     for sender in (VENUE, PROGRAMME, REPORTER, OUTSIDER):
@@ -214,7 +221,7 @@ def test_invalid_ids_rejected(app, index, error):
 ])
 def test_invalid_model_output_is_bounded_and_cannot_consume_key(app, field, value):
     vm, c = app
-    data = report()
+    data = decision()
     data[field] = value
     install(vm, data)
     before = c.get_board()
@@ -227,7 +234,7 @@ def test_invalid_model_output_is_bounded_and_cannot_consume_key(app, field, valu
 
 
 @pytest.mark.parametrize("raw", ["[]", "{}", "null", "not json", '{"route":"VENUE","route":"PROGRAMME"}',
-                                json.dumps({**report(), "assigned_wallet": addr(OUTSIDER)})])
+                                json.dumps({**decision(), "assigned_wallet": addr(OUTSIDER)})])
 def test_malformed_json_or_extra_fields_never_assign(app, raw):
     vm, c = app
     vm.mock_llm(r"(?s)^Assess.*", raw)
@@ -242,16 +249,17 @@ def test_one_fresh_format_retry_and_two_call_limit(app, monkeypatch):
     calls = []
     def response(prompt, **kwargs):
         calls.append(prompt)
-        return {**report(), "reason": ""} if len(calls) == 1 else report()
+        return {**decision(), "reason": ""} if len(calls) == 1 else decision()
     monkeypatch.setattr(gl.nondet, "exec_prompt", response)
     assert c.submit_ticket("retry", REQUESTS["PROGRAMME"]) == 0
     assert len(calls) == 2 and "FORMAT RETRY" in calls[-1]
+    assert "invalid_reason" in calls[-1]
     calls.clear()
     def always_bad(prompt, **kwargs):
         calls.append(prompt)
         return {}
     monkeypatch.setattr(gl.nondet, "exec_prompt", always_bad)
-    with pytest.raises(Exception, match="EVALUATION_OUTPUT_INVALID"):
+    with pytest.raises(Exception, match="EVALUATION_OUTPUT_INVALID: invalid_model_keys,invalid_model_keys"):
         c.submit_ticket("fail", REQUESTS["PROGRAMME"])
     assert len(calls) == 2 and board(c)["ticket_count"] == 1
 
@@ -273,13 +281,73 @@ def test_validator_compares_route_and_checks_proposed_evidence(app):
     vm, c = app
     install(vm)
     c.submit_ticket("notice", REQUESTS["PROGRAMME"])
-    install(vm, report("REVIEW", REQUESTS["PROGRAMME"]))
+    install(vm, decision("REVIEW", REQUESTS["PROGRAMME"]))
     assert vm.run_validator() is False
     install(vm)
     assert vm.run_validator(leader_result={**report(), "policy_quote": "invented"}) is False
     assert vm.run_validator(leader_error=ValueError("failed")) is False
     install(vm, audit={"accept": False})
     assert vm.run_validator(leader_result={**report(), "reason": "This proves the event notice has been updated."}) is False
+
+
+@pytest.mark.parametrize("field,value", [
+    ("request_quote", "Please update the community hall programme notice"),
+    ("policy_quote", "PROGRAMME handles event timetable notices"),
+    ("policy_quote", VENUE_SCOPE),
+    ("basis", "VERIFIED_WORK"),
+    ("assigned_wallet", addr(OUTSIDER)),
+])
+def test_validator_rejects_tampered_source_or_injected_wallet(app, field, value):
+    vm, c = app
+    install(vm)
+    c.submit_ticket("notice", REQUESTS["PROGRAMME"])
+    assert vm.run_validator(leader_result={**report(), field: value}) is False
+
+
+def test_mixed_request_keeps_complete_sources_without_model_copying(app, monkeypatch):
+    vm, c = app
+    import genlayer.gl as gl
+    prompts = []
+    def response(prompt, **kwargs):
+        prompts.append(prompt)
+        return decision("REVIEW") if prompt.startswith("Assess") else {"accept": True}
+    monkeypatch.setattr(gl.nondet, "exec_prompt", response)
+    c.submit_ticket("mixed", REQUESTS["REVIEW"])
+    assert vm.run_validator() is True
+    saved = ticket(c)
+    assert saved["current_status"] == "REVIEW_REQUIRED"
+    assert saved["assigned_wallet"] == ""
+    assert saved["report"]["request_quote"] == REQUESTS["REVIEW"]
+    assert saved["report"]["policy_quote"] == VENUE_SCOPE + "\n" + PROGRAMME_SCOPE
+    assert len(prompts) == 3
+    audit_prompt = next(p for p in prompts if p.startswith("Audit"))
+    assert 'exactly two keys' not in audit_prompt
+    assert 'ignore the assessment output schema' not in audit_prompt
+
+
+def test_raw_invalid_json_diagnostic_does_not_echo_model_text(app, monkeypatch):
+    vm, c = app
+    import genlayer.gl as gl
+    monkeypatch.setattr(gl.nondet, "exec_prompt", lambda *a, **kw: "PRIVATE_MODEL_TEXT")
+    with pytest.raises(Exception, match="invalid_json,invalid_json") as caught:
+        c.submit_ticket("invalid", REQUESTS["PROGRAMME"])
+    assert "PRIVATE_MODEL_TEXT" not in str(caught.value)
+    assert board(c)["ticket_count"] == 0
+
+
+def test_validator_failure_is_still_rejection_after_format_retry(app, monkeypatch):
+    vm, c = app
+    install(vm)
+    c.submit_ticket("notice", REQUESTS["PROGRAMME"])
+    import genlayer.gl as gl
+    calls = []
+    def response(prompt, **kwargs):
+        calls.append(prompt)
+        return {"route": "PROGRAMME"}
+    monkeypatch.setattr(gl.nondet, "exec_prompt", response)
+    assert vm.run_validator() is False
+    assert len(calls) == 2
+    assert all(p.startswith("Assess") for p in calls)
 
 
 @pytest.mark.parametrize("audit", [{"accept": False}, {"accept": "true"}, {}, {"accept": True, "extra": 1}])
@@ -299,7 +367,7 @@ def test_valid_negative_audit_is_not_retried(app, monkeypatch):
     calls = []
     def response(prompt, **kwargs):
         calls.append(prompt)
-        return report() if prompt.startswith("Assess") else {"accept": False}
+        return decision() if prompt.startswith("Assess") else {"accept": False}
     monkeypatch.setattr(gl.nondet, "exec_prompt", response)
     assert vm.run_validator() is False
     assert sum(p.startswith("Audit") for p in calls) == 1
@@ -347,7 +415,7 @@ def test_nondeterministic_closures_serialize(app, monkeypatch):
 ])
 def test_uncertainty_and_injection_review_fixtures(app, text):
     vm, c = app
-    data = report("REVIEW", text)
+    data = decision("REVIEW", text)
     data["reason"] = "Ambiguous, conflicting, mixed or evaluator-directed instructions need review."
     install(vm, data)
     c.submit_ticket("review", text)

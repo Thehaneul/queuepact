@@ -1,10 +1,10 @@
 {
   "project": "QueuePact",
-  "version": "queuepact-0.1",
+  "version": "queuepact-0.2",
   "prepared_date": "2026-10-18",
-  "source_sha256": "0fbb1b71ce4ea94337dcf58f9ee674c4092c0d48ed32f9240994167816d07018",
+  "source_sha256": "a0ab0c163d2378d64e427b0ef23e4dacb8d1125fe7c91e86cf32894a71b8298f",
   "local": {
-    "fixture_tests_passed": 65,
+    "fixture_tests_passed": 73,
     "sdk_lint_checks_passed": 3,
     "sdk_validation": "PASSED",
     "public_read_methods": 3,
@@ -14,20 +14,81 @@
     "network_transactions": 0,
     "consensus_evidence": "Independent callback tests and a labelled local gate harness; not a live validator network.",
     "initial_runs": [
-      "Interrupted SDK setup run, partial output retained.",
-      "31 passed and 1 fixture failure: float rejected by calldata before contract check; expectation corrected."
+      "Version 0.1 setup and fixture logs preserved under history/queuepact-0.1.",
+      "Version 0.2: first regression run passed all 73 authored-fixture tests."
     ],
     "final_test_log": "local_test_results.txt",
-    "final_sdk_log": "sdk_check_results.txt"
+    "final_sdk_log": "sdk_check_results.txt",
+    "fixture_test_duration_seconds": 3.38
   },
   "hosted": {
-    "status": "NOT_RUN",
-    "contract_address": null,
-    "transactions": [],
-    "observations": []
+    "status": "V02_BOUNDED_WALKTHROUGH_COMPLETED_FROM_SCREENSHOT_EVIDENCE",
+    "contract_address": "0x143bFB5CBbCd63CFdE513Bdd330C22Ce9587e2F2",
+    "network_surface": "GenLayer Studio, Normal (Full Consensus), Simulation Mode unchecked in screenshots",
+    "completed_date": "2026-10-18",
+    "evidence_file": "HOSTED_RESULTS.json",
+    "evidence_type": "Normalized transcription of user-provided screenshots; not a raw RPC export.",
+    "deployment_status_shown": "FINALIZED",
+    "observed_saved_tickets": [
+      {
+        "ticket_id": 0,
+        "request_key": "mixed",
+        "route": "REVIEW",
+        "initial_status": "REVIEW_REQUIRED",
+        "ticket_hash": "63b518da78767347bf1e7e845e9f680ae1027f97b5314ef1233b1b2bb070aa84"
+      },
+      {
+        "ticket_id": 1,
+        "request_key": "transport",
+        "route": "REVIEW",
+        "initial_status": "REVIEW_REQUIRED",
+        "ticket_hash": "c2987ac713e677d29c742f63b47ed7e529f765ca1635e492d2df927cf5889ba9"
+      },
+      {
+        "ticket_id": 2,
+        "request_key": "taxi",
+        "route": "OUTSIDE",
+        "initial_status": "OUT_OF_SCOPE",
+        "ticket_hash": "12cd9076b180741801ecc0247364b74ef3d25255334f8fe3a2a462fde484b95b"
+      },
+      {
+        "ticket_id": 3,
+        "request_key": "notice",
+        "route": "PROGRAMME",
+        "initial_status": "QUEUED",
+        "ticket_hash": "60298ec275ca41316d426da0e65c98b0aa2060c5dc97fd25153775714e63fb43"
+      }
+    ],
+    "acknowledged_ticket": {
+      "ticket_id": 3,
+      "acknowledged_by": "0xb32569c8822e66fae73b8eb3a11e0e6034bb4638",
+      "current_status": "ACKNOWLEDGED",
+      "report_and_hash_preserved": true
+    },
+    "actual_v02_sequence": {
+      "deployments_observed": 1,
+      "saved_tickets_observed": 4,
+      "acknowledgements_observed": 1,
+      "method_writes_in_walkthrough": 5,
+      "essential_read_screenshots": 6,
+      "wallet_switches_planned_and_guided": 1,
+      "extra_ticket_reason": "Accidental old text submitted under transport; kept as ticket 1."
+    },
+    "full_finalized_receipts_independently_audited": false,
+    "final_board_totals_read": false,
+    "v01_failure_record": {
+      "archive": "ARCHIVED_V01.zip",
+      "path": "history/hosted_v01_observations.json"
+    },
+    "v01_post_failure_board_zero_tickets_observed": true,
+    "optional_further_live_tests_planned": false
   },
   "publication": {
-    "github_url": null,
+    "github_url": "https://github.com/Thehaneul/queuepact",
+    "repository_visibility_observed": "public",
+    "initial_upload_audited_commit": "a64f72be8052b818e18a973dc63dc1a7981db8ce",
+    "initial_upload_finding": "Archived v0.1 files overwrote current files when flattened into the repository root.",
+    "correction_bundle": "Flat v0.2 files with archived history inside ARCHIVED_V01.zip; compare uploaded source after replacement.",
     "submission_status": "NOT_SUBMITTED"
   },
   "planned_walkthrough": {
@@ -43,7 +104,10 @@
       "programme notice ticket -> QUEUED",
       "assigned wallet acknowledgement -> ACKNOWLEDGED"
     ],
-    "optional_live_tests_planned": false
+    "optional_live_tests_planned": false,
+    "additional_old_board_read": 1,
+    "deployment_strategy": "Fresh v0.2 instance after checking old board; no in-place upgrade or migration claim.",
+    "status": "Completed with one additional ticket/read for user-entered old text; v0.1 failure and recovery retained separately."
   },
   "previous_projects": {
     "changed_or_retested": false,

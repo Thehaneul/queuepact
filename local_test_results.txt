@@ -1,16 +1,8 @@
-WARNING: File `gltest.config.yaml` not found in the current directory, using default config, create a `gltest.config.yaml` file to manage multiple networks
-INFO: Clearing artifacts directory: artifacts
-INFO: Using the following configuration:
-INFO:   RPC URL: http://127.0.0.1:4000/api
-INFO:   Selected Network: localnet
-INFO:   Available networks: ['localnet', 'studionet', 'testnet_asimov', 'testnet_bradbury']
-INFO:   Selected chain type: localnet
-INFO:   Available chains: localnet, studionet, testnet_asimov, testnet_bradbury
-INFO:   Contracts directory: contracts
-INFO:   Artifacts directory: artifacts
-INFO:   Environment: .env
-INFO:   Default wait interval: 3000 ms
-INFO:   Default wait retries: 50
-INFO:   Leader only mode: False
-.................................................................        [100%]
-65 passed in 3.09s
+QueuePact 0.2 authored-fixture regression run, 2026-10-18
+Command: python -m pytest -q test_queuepact.py
+Completion output (initial progress omitted):
+............................................................... [ 98%]
+.                                                                        [100%]
+73 passed in 3.38s
+
+Exit code: 0

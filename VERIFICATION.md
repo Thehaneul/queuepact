@@ -1,7 +1,15 @@
 # QueuePact verification — 18 October 2026
 
-**65 authored-fixture tests passed. SDK lint passed (3 checks), and semantic
-validation passed. No hosted deployment or live model evaluation has occurred.**
+**Version 0.2: 73 authored-fixture tests passed in 3.38 seconds. SDK lint passed
+(3 checks), and semantic validation passed. The bounded v0.2 Studio walkthrough
+completed on 18 October 2026, supported by user-provided Accepted-state reads.**
+
+Version 0.1 deployed and returned the expected initial board. Its first mixed
+ticket ended UNDETERMINED after leader rotations and validator disagreement.
+An additional screenshot shows one leader exhausting two invalid model responses.
+Its post-failure board showed zero saved tickets. The new v0.2 instance subsequently
+saved four tickets and recorded the assigned programme wallet's acknowledgement.
+See HOSTED_RESULTS.json, RECOVERY_NOTES.md and history for the separate evidence.
 
 The ABI has one constructor parameter and five methods: three reads and two writes.
 The saved logs are local_test_results.txt and sdk_check_results.txt.
@@ -17,8 +25,14 @@ The saved logs are local_test_results.txt and sdk_check_results.txt.
 - Exact policy hash, original ticket hash and preservation after acknowledgement.
 - Input/address/ID validation, maximum text lengths and the 1,000-ticket boundary.
   Intake stops at the limit but existing tickets can still be acknowledged.
-- Invalid model routes, empty/oversized reasons, invented or wrong-team quotes,
-  raw duplicate JSON keys, malformed JSON and extra fields such as a model-selected wallet.
+- Invalid model routes, empty/oversized reasons, raw duplicate JSON keys,
+  malformed JSON and extra fields such as a model-selected wallet or quotation.
+- The stored request is the entire original input. REVIEW/OUTSIDE carry both
+  complete policy scopes; single-team routes carry the selected complete scope.
+  Validators reject shortened, invented or wrong-team sources and altered basis.
+- The mixed-request regression needs no model-generated quotation. Assessment
+  and audit prompts have separate schemas. Error categories are bounded and do
+  not echo raw model text. Two invalid independent responses still reject a vote.
 - One fresh format retry; a two-call assessment limit; provider errors without
   automatic retry; valid negative audit without retry.
 - Independent route disagreement and evidence-audit rejection.
@@ -61,21 +75,44 @@ was rejected by calldata encoding before the contract's integer check. The test
 was corrected to expect that earlier SDK rejection and still check unchanged
 state. Its original output is in local_fixture_correction_results.txt.
 
-Two constructor exceptions were changed to the SDK's UserError type after linter
-advice. The final source passed lint and validation with no such warnings, and
-the final complete fixture run passed all 65 cases in 3.09 seconds.
+Version 0.1 had two constructor exceptions changed to the SDK's UserError type
+after linter advice; it passed 65 fixtures in 3.09 seconds. Those exact files and
+logs are archived in ARCHIVED_V01.zip under history/queuepact-0.1. Its later live failure demonstrates
+that fixture success does not establish model compatibility or consensus.
+
+Version 0.2 preserves the permission and storage paths, simplifies the model
+schema, attaches sources in code, separates audit instructions, and reports
+bounded format-error categories. Its first fixture run passed 73 cases in 3.38
+seconds. Lint and semantic validation passed. There were no live model calls or
+new transactions during these local checks.
 
 Previous project code and deployments were not changed or retested. Reused local
 tooling and SDK preparation code are infrastructure, not new evidence about those
 projects. ExplainGate remains finished and submitted.
 
-## Hosted evidence still to collect
+## Completed bounded hosted walkthrough for v0.2
 
-One new contract address, the initial board read, three saved ticket results and
-one acknowledgement preserving the original ticket hash/report. Record actual IDs,
-wallets, errors and transaction outcomes. An Accepted-state read is not a full
-finalized receipt audit; keep those evidence types separate.
+Contract: `0x143bFB5CBbCd63CFdE513Bdd330C22Ce9587e2F2`.
+The initial v0.2 board showed the correct version, two wallets, zero tickets and
+zero acknowledgements. The deployment transaction row showed FINALIZED.
 
-The bounded phone walkthrough is in PHONE_WALKTHROUGH.txt. No optional live tests
-are planned after it completes. Production suitability, private identity,
+Accepted-state get_ticket reads showed IDs 0 and 1 as REVIEW_REQUIRED; ID 2 as
+OUT_OF_SCOPE; ID 3 as QUEUED for PROGRAMME and then ACKNOWLEDGED by the programme
+wallet. Ticket 1 was an operator input mistake: key transport with the old mixed
+text. It was preserved; key taxi produced the intended excluded-transport result.
+The walkthrough therefore used four ticket submissions and one acknowledgement.
+
+The full original report and hash of ticket 3 matched before/after acknowledgement.
+All four displayed ticket hashes and the policy hash were reproduced from the
+normalized screenshot transcription. This verifies transcription consistency,
+not an independent retrieval of on-chain state. HOSTED_RESULTS.json contains the
+transcribed fields and screenshot filenames; screenshot images are not bundled.
+
+No full finalized method-call receipts or independent RPC state were retrieved.
+No final board-totals read was requested. This is a completed small demonstration,
+not a model-accuracy benchmark or general consensus-reliability claim. VENUE-only
+routing and rejection/security/capacity cases remain local-fixture coverage only.
+
+The completed phone record is in PHONE_WALKTHROUGH.txt. No optional live tests
+are planned. Production suitability, private identity,
 physical work completion, contest eligibility and rewards are not established.

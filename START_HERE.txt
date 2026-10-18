@@ -1,27 +1,26 @@
-QueuePact — our next GenLayer project
+QueuePact — GitHub upload correction, version 0.2
 
-What it does: routes a community request to the team responsible for it, then
-allows only that team's wallet to acknowledge receipt and responsibility.
+The Studio walkthrough is complete. No further deployment or testing is needed.
+Contract: 0x143bFB5CBbCd63CFdE513Bdd330C22Ce9587e2F2
+Repository: https://github.com/Thehaneul/queuepact
 
-Example: changing an event time on a notice goes to PROGRAMME. Rearranging chairs
-goes to VENUE. Requests needing both teams stay unassigned for review.
+The first GitHub upload flattened archived files into the root, leaving the old
+v0.1 contract, tests and several documents. This flat package avoids duplicate
+filenames. All files beside this note are the current versions, except the one
+clearly named historical archive ARCHIVED_V01.zip.
 
-This is a separate project from SurplusHold. It manages task responsibility,
-not stock. ExplainGate remains submitted and its walkthrough remains finished.
-SurplusHold's walkthrough and GitHub upload are complete; its final submission
-has not been explicitly confirmed in this conversation.
+PHONE UPLOAD:
+1. Extract QueuePact_GitHub_Upload.zip ONCE into a fresh folder.
+2. Leave ARCHIVED_V01.zip unopened.
+3. In the existing GitHub repository use Add file -> Upload files.
+4. Select every file in this new extracted folder, including ARCHIVED_V01.zip.
+5. Commit the replacement files to main. Suggested message: Correct QueuePact v0.2 files.
+6. Reply Done so the uploaded source and evidence can be checked.
 
-Status: local prototype; no hosted deployment or submission yet.
+The old root copies hosted_v01_observations.json and PHONE_WALKTHROUGH_v02_PLANNED.txt
+can remain as historical records; they do not affect current code or results.
 
-First phone step:
-Download queuepact.py, open https://studio.genlayer.com/ and use Add From File.
-Send a screenshot of its deployment form. We will fill the ONE constructor field
-with the other team's public wallet address and proceed one step at a time.
-
-Planned live work: ONE deployment and FOUR writes (three tickets, one acknowledgement),
-with FIVE essential reads. Two wallets and only one wallet switch are needed.
-No extra live test suite is planned after these steps pass.
-
-README.md explains behaviour; IDEA_RESEARCH.md compares the ideas and old projects.
-VERIFICATION.md records what local checks prove and what remains untested live.
-PHONE_WALKTHROUGH.txt contains the exact inputs for the agreed small walkthrough.
+Observed: tickets 0/1 REVIEW_REQUIRED, ticket 2 OUT_OF_SCOPE, ticket 3 PROGRAMME
+QUEUED -> ACKNOWLEDGED. Original report/hash preserved. 73 local fixture tests
+and SDK lint/validation passed. Full finalized method-call receipts were not
+independently retrieved. No submission has been reported.
